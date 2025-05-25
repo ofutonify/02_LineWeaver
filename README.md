@@ -2,7 +2,7 @@
 ## - スカイリムMOD 文脈重視の翻訳者向け支援ツール  
 ## - Skyrim MOD Translation Assistant Tool
 
-🚀 Open in Streamlit: https://02lineweaver-ufufhnq7mpz8jcskbbcis7.streamlit.app/
+🚀 Open in Streamlit: https://02lineweaver-nw4bb8sehxbetnh95f6cvy.streamlit.app/
 
 - Skyrim SE/AE MODの翻訳を、自動翻訳だけではなく、物語や会話の流れ・文脈を把握して翻訳したい人のための支援ツールです。  
 - xTranslator / SSEEdit と連携し、レコード情報の整理・変換・再構築が可能。<br>
