@@ -101,7 +101,7 @@ h1, h2, h3 {
 
 # タイトル
 st.markdown(f"<h1 style='text-align:center;'>{t['title1']}<br>{t['title2']}</h1>", unsafe_allow_html=True)
-st.markdown(f"<div style='text-align:center; margin: 20px 0;'><a href='https://note.com/ofutonify/n/nbe796d6ffe5' target='_blank' style='background-color:#0b5394; color:white; padding:12px 24px; border-radius:8px; text-decoration:none; font-weight:bold; display:inline-block;'>{t['tutorial']}</a></div>", unsafe_allow_html=True)
+st.markdown(f"<div style='text-align:center; margin: 20px 0;'><a href='https://note.com/ofutonomy/n/nbe796dd6ffe5' target='_blank' style='background-color:#0b5394; color:white; padding:12px 24px; border-radius:8px; text-decoration:none; font-weight:bold; display:inline-block;'>{t['tutorial']}</a></div>", unsafe_allow_html=True)
 
 # ステップ1
 st.markdown("<hr>", unsafe_allow_html=True)
