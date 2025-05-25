@@ -13,7 +13,7 @@
 
 ![Step1 Screenshot](02_LineWeaver/step1en.jpg)
 
-[画像付きの詳細な使い方はこちら / For detailed instructions with images, click here](https://note.com/ofutonify/n/nbe796d6ffe5)
+[画像付きの詳細な使い方はこちら / For detailed instructions with images, click here](https://note.com/ofutonomy/n/nbe796dd6ffe5)
 
 
 ## 主な機能 / Features
