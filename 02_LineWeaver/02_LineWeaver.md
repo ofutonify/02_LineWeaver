@@ -1,7 +1,7 @@
 ﻿スカイリムMOD 文脈重視の翻訳者向け支援ツール / Skyrim MOD Translation Assistant Tool 
 02_LineWeaver [JP/EN]
 
-🚀 Streamlit: https://02lineweaver-ufufhnq7mpz8jcskbbcis7.streamlit.app/
+🚀 Streamlit: https://02lineweaver-nw4bb8sehxbetnh95f6cvy.streamlit.app/
 
 特徴：
 - Skyrim SE/AE フォロワーMODや、クエストMODの翻訳を、自動翻訳だけではなく、物語や会話の流れ・文脈を把握して翻訳したい人のための支援ツールです。  
