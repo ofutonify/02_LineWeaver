@@ -83,7 +83,7 @@ Features:
 - Merge CSV output from SSEEdit and XML from xTranslator
 - Convert into a translator-friendly `.xlsx` file, with untranslated lines automatically highlighted.  
   (You can sort rows or add columns as long as cell contents are preserved.  
-  Rows with blank EDID or columns with blank headers will be ignored during XML conversion.)
+  Rows with blank EDID or columns with blank headers will be ignored during XML conversion)
 - Reconvert the translated `.xlsx` back to XML for use in xTranslator
 - Dark/light theme support via Streamlit's auto-switching.
 
@@ -116,8 +116,7 @@ After uploading the files, click the "Start Conversion" button. Once processing 
 
 - This step merges the CSV output from SSEEdit (02LW_XXX.csv) with the XML data from xTranslator.
 
-- If the contents of the "Dest" column are the same as the "Source" column at the time of export, those cells will be considered untranslated and highlighted. (Please translate the highlighted cells in the Dest column into the target language.)
-- The following REC types are excluded from this check, as they typically don’t require translation. (I usually mark them yellow in xTranslator to avoid overwriting other mods.)
+- If the contents of the "Dest" column are the same as the "Source" column at the time of export, those cells will be considered untranslated and highlighted. (Please translate the highlighted cells in the Dest column into the target language)
 - However, the following REC types are excluded from this check, as they typically don’t require translation (I usually mark them yellow in xTranslator to avoid overwriting other mods):
 
 "HDPT:FULL", "FURN:FULL", "CLAS:FULL", "DOOR:FULL", "FACT:FULL", "CLFM:FULL",
@@ -130,7 +129,7 @@ After uploading the files, click the "Start Conversion" button. Once processing 
 If color highlighting isn’t needed, you can also edit the file after saving it as a CSV.
 - You can sort by FormID within each REC category, insert blank rows for readability, rearrange columns, or even add memo columns—none of this will affect Step 3 (reconversion to XML).
 
-* Just make sure not to delete any of the column headers in the first row (such as Source, Dest, etc.).
+* Just make sure not to delete any of the column headers in the first row (such as Source, Dest, etc)
     These headers are required for XML reconversion.
     If you want to add new columns, either leave the first-row cell blank or insert a row below with a custom title—both methods are safe.
 
@@ -144,7 +143,7 @@ If color highlighting isn’t needed, you can also edit the file after saving it
 2. Click “Start conversion to XML” to re-generate the XML file  
 3. Import the XML back into xTranslator and apply it to the `.esp`. You can then re-export the updated XML if needed.
 - If the reconverted XML fails to apply to certain entries, please manually edit them in xTranslator.
-(This can happen when the original text contains invalid formatting.)
+(This can happen when the original text contains invalid formatting)
 
 ⚠ About the Exported XML
 - The XML generated via reconversion is intended for translation application and testing purposes only.
@@ -158,7 +157,7 @@ If color highlighting isn’t needed, you can also edit the file after saving it
 
 [License: MIT]
 - Feel free to customize and adapt the source scripts for your own use.
-- If you plan to redistribute them, please include credit to “02 LineWeaver” and link to the GitHub page: https://github.com/ofutonify/02_LineWeaver
+- If you plan to redistribute them, please include credit to "02 LineWeaver" and link to the GitHub page: https://github.com/ofutonify/02_LineWeaver
 - Commercial use is not permitted.
 
 This tool was inspired by DSDifyer—huge thanks to the original author!
