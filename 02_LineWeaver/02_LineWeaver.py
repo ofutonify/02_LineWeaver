@@ -205,7 +205,7 @@ if st.button(t["convert_btn"], key="to_xlsx") and csv_file and xml_file:
             "HDPT:FULL", "FURN:FULL", "CLAS:FULL", "DOOR:FULL", "FACT:FULL", "CLFM:FULL",
             "TREE:FULL", "MGEF:FULL", "RACE:FULL", "EXPL:FULL", "HAZD:FULL", "BPTD:BPTN"
         }
-        mask = (~csv4["REC"].isin(excluded_rec)) & csv4["Dest"].apply(is_english)
+        mask = (~csv4["REC"].isin(excluded_rec)) & (csv4["Source"] == csv4["Dest"])
 
         for i, match in enumerate(mask, start=2):
             if match:
