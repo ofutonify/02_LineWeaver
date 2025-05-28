@@ -46,6 +46,8 @@
 
 - 更新があったら、SSEEditからのcsv出力は毎回やる必要がありますが、"更新分のみエクスポートした"xmlを使えば更新分のみのxlsxができます。そこだけxmlへ再変換するもよし、既存ファイルに自分で付け足すもよし。
 
+- 2025-05-28 変更ログ: 未翻訳セルの判定をASCIIから完全一致へ変更しました。ソース元の言語に関係なく、未翻訳セルの検出ができるようになりました。
+
 🔹 ステップ3：翻訳済みXLSXをXMLに再変換  
 1. 翻訳が完了した `.xlsx` をアップロード  
 2. 「xml に変換開始」をクリックして、XML形式に変換  
@@ -136,6 +138,8 @@ If color highlighting isn’t needed, you can also edit the file after saving it
 - If the mod has been updated, you’ll need to re-export the full CSV from SSEEdit.
 - However, if you only export the updated lines from xTranslator, LineWeaver can generate an .xlsx containing just the updated content.
 - You can then either reconvert only that portion back to XML, or manually append it to your existing files—whichever fits your workflow!
+
+- 2025-05-28 Untranslated cells are now detected based on exact match between Source and Dest, instead of just checking for ASCII. This now works for any language.
 
 🔹 Step 3: Convert Translated XLSX back to XML
 
