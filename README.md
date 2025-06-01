@@ -58,9 +58,10 @@
 3. 「xlsx に変換開始」で翻訳用 `.xlsx` を生成（未翻訳セルに色付き）  
 
 ### 🔹 ステップ3：翻訳済みXLSXをXMLに再変換  
-1. 翻訳が完了した `.xlsx` をアップロード  
-2. 「xml に変換開始」をクリックして、XML形式に変換  
-3. xTranslatorにインポートして `.esp` に適用 → 再度XMLエクスポート  
+1. 翻訳が完了した `.xlsx` をアップロード
+2. xTranslatorでの「翻訳先の言語」を選ぶ
+3. 「xml に変換開始」をクリックして、XML形式に変換  
+4. xTranslatorにインポートして `.esp` に適用 → 再度XMLエクスポート  
 
 ---
 
@@ -75,9 +76,10 @@
 3. Click “Start conversion to xlsx” to generate a translation-ready `.xlsx` file with color-highlighted untranslated cells.
 
 ### 🔹 Step 3: Convert Translated XLSX back to XML
-1. Upload your completed `.xlsx` after translation  
-2. Click “Start conversion to XML” to re-generate the XML file  
-3. Import the XML back into xTranslator and apply it to the `.esp`. You can then re-export the updated XML if needed.
+1. Upload your completed `.xlsx` after translation
+2. Select the destination language (Dest) for XML export using the dropdown menu
+3. Click “Start conversion to XML” to re-generate the XML file  
+4. Import the XML back into xTranslator and apply it to the `.esp`. You can then re-export the updated XML if needed.
 
 ---
 
