@@ -221,6 +221,13 @@ st.markdown(f"<div class='section-title'>{t['step3_title1']}<br><span class='sub
 st.markdown(f"<div class='dropbox'>{t['xlsx_upload']}</div>", unsafe_allow_html=True)
 xlsx_file = st.file_uploader("XLSX", type=["xlsx"], key="xlsx_input")
 
+# 翻訳先言語を選択
+dest_lang = st.selectbox(
+    "Select destination language (for xTranslator)",
+    ["japanese", "german", "french", "spanish", "russian", "polish", "italian", "chinese", "korean", "portuguese", "turkish"],
+    index=0
+)
+
 if st.button(t["convert_xml_btn"], key="to_xml") and xlsx_file:
     df = pd.read_excel(xlsx_file, dtype=str).fillna("")
     plugin_base = xlsx_file.name.replace("02LW_", "").replace(".xlsx", "")
@@ -230,7 +237,7 @@ if st.button(t["convert_xml_btn"], key="to_xml") and xlsx_file:
     params = ET.SubElement(root, "Params")
     ET.SubElement(params, "Addon").text = f"{plugin_base}.esp"
     ET.SubElement(params, "Source").text = "english"
-    ET.SubElement(params, "Dest").text = "japanese"
+    ET.SubElement(params, "Dest").text = dest_lang  # ← ここで選択された言語を使用
     ET.SubElement(params, "Version").text = "2"
 
     content = ET.SubElement(root, "Content")
@@ -251,9 +258,8 @@ if st.button(t["convert_xml_btn"], key="to_xml") and xlsx_file:
 
     # ダウンロードボタン
     st.download_button(
-    label=t["xml_download"],
-    data=xml_bytes,
-    file_name=f"{plugin_base}.xml",
-    mime="application/xml"
-)
-
+        label=t["xml_download"],
+        data=xml_bytes,
+        file_name=f"{plugin_base}.xml",
+        mime="application/xml"
+    )
