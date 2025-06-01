@@ -16,6 +16,10 @@
 
 ⭐ 私はクエストタイトルやクエストジャーナルのあとに、そのクエストの進行に沿った会話の流れに並べ替えて使ってます。
 
+変更ログ: 
+- 2025-05-28 未翻訳セルの判定をASCIIから完全一致へ変更しました。ソース元の言語に関係なく、未翻訳セルの検出ができるようになりました。
+- 2025-06-01 XML再変換時のDest言語（翻訳先）を選べるようにUIを追加（xTranslatorでの他言語への翻訳に対応）
+
 使い方と機能詳細：
 
 🔹 ステップ1：SSEEditでCSV出力
@@ -46,13 +50,14 @@
 
 - 更新があったら、SSEEditからのcsv出力は毎回やる必要がありますが、"更新分のみエクスポートした"xmlを使えば更新分のみのxlsxができます。そこだけxmlへ再変換するもよし、既存ファイルに自分で付け足すもよし。
 
-- 2025-05-28 変更ログ: 未翻訳セルの判定をASCIIから完全一致へ変更しました。ソース元の言語に関係なく、未翻訳セルの検出ができるようになりました。
-
 🔹 ステップ3：翻訳済みXLSXをXMLに再変換  
-1. 翻訳が完了した `.xlsx` をアップロード  
-2. 「xml に変換開始」をクリックして、XML形式に変換  
-3. xTranslatorにインポートして `.esp` に適用 → 再度XMLエクスポート
+1. 翻訳が完了した `.xlsx` をアップロード
+2. xTranslatorでの「翻訳先の言語」を選ぶ
+3. 「xml に変換開始」をクリックして、XML形式に変換  
+4. xTranslatorにインポートして `.esp` に適用 → 再度XMLエクスポート
+   
 ※再変換したxmlが適用できない箇所があった場合は、xTranslatorで手動で編集してください。（原文が不正な記述の場合に起こります）
+
 - ⚠ 配布用のXMLについて
 再変換機能で出力される`xml`は翻訳適用や再変換テストには使えますが、配布時には必ず"xTranslatorでエクスポートし直したxml"を使ってください。（xTranslator内部の構造や形式に完全準拠していないため、MOD環境や他ツールとの互換性確保のためにも再出力を推奨）
 
@@ -91,6 +96,10 @@ Features:
 
 ⭐ I usually sort the lines so that quest titles and quest journal entries come first, followed by dialogue in the order it occurs during the quest progression.
 
+Change Log:
+- 2025-05-28 Untranslated cells are now detected based on exact match between Source and Dest, instead of just checking for ASCII. This now works for any language.
+- 2025-06-01 Add destination language dropdown in Step 3 for XML export compatibility with xTranslator
+
 Usage & Function Details:
 
 🔹 Step 1: Export CSV using SSEEdit  
@@ -107,9 +116,10 @@ Usage & Function Details:
 🔹 Step 2: Prepare for Translation (CSV + XML → XLSX)
 After uploading the files, click the "Start Conversion" button. Once processing is complete, a download button will appear.
 
-1. Load the target MOD `.esp/.esm` in xTranslator and export as XML  
-2. Launch the Streamlit app, then upload both CSV and XML  
-3. Click “Start conversion to xlsx” to generate a translation-ready `.xlsx` file with color-highlighted untranslated cells.
+1. Load the target MOD `.esp/.esm` in xTranslator and export as XML
+2. Select the destination language (Dest) for XML export using the dropdown menu
+3. Launch the Streamlit app, then upload both CSV and XML  
+4. Click “Start conversion to xlsx” to generate a translation-ready `.xlsx` file with color-highlighted untranslated cells
 
 - If you're starting from an entirely untranslated state, load the esp file in xTranslator and temporarily auto-translate all lines before exporting to XML.
 - You can also use the translation API inside xTranslator before exporting—this tool (02LW) doesn't support translation API integration.
@@ -138,8 +148,6 @@ If color highlighting isn’t needed, you can also edit the file after saving it
 - If the mod has been updated, you’ll need to re-export the full CSV from SSEEdit.
 - However, if you only export the updated lines from xTranslator, LineWeaver can generate an .xlsx containing just the updated content.
 - You can then either reconvert only that portion back to XML, or manually append it to your existing files—whichever fits your workflow!
-
-- 2025-05-28 Untranslated cells are now detected based on exact match between Source and Dest, instead of just checking for ASCII. This now works for any language.
 
 🔹 Step 3: Convert Translated XLSX back to XML
 
