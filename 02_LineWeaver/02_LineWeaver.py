@@ -9,6 +9,12 @@ from openpyxl import load_workbook
 from openpyxl.styles import PatternFill
 from io import BytesIO
 
+# ページ設定
+st.set_page_config(
+    page_title="02_LineWeaver",
+    page_icon="💫"
+)
+
 # 言語切替
 lang = st.selectbox("Language / 言語を選択してください", ["日本語", "English"])
 texts = {
