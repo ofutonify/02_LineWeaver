@@ -113,8 +113,8 @@ Special thanks as well to the developers of xTranslator and SSEEdit!
 
 ## ライセンス / License
 MIT 
-- このツールは個人の翻訳支援を目的としており、改造・再利用は自由ですが、商用利用はご遠慮ください。
-- This tool is intended for personal translation support. Feel free to modify or reuse it, but commercial use is not allowed.
+- MITライセンスのもとで自由にご利用・改造・再配布OKですが、非営利の範囲でお願いします。
+- This tool is released under the MIT License. Feel free to use, modify, and redistribute it, but please keep it non-commercial.
 
 ## 制作・サポート / Credits & Support :)
 - 作者 / Author: ofu
