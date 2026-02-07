@@ -7,13 +7,8 @@ import os
 import numpy as np
 from openpyxl import load_workbook
 from openpyxl.styles import PatternFill
+from openpyxl.utils import get_column_letter
 from io import BytesIO
-
-# ページ設定
-st.set_page_config(
-    page_title="02_LineWeaver",
-    page_icon="💫"
-)
 
 # 言語切替
 lang = st.selectbox("Language / 言語を選択してください", ["日本語", "English"])
@@ -182,17 +177,37 @@ if st.button(t["convert_btn"], key="to_xlsx") and csv_file and xml_file:
 
     csv1["FormID"] = csv1["FormID"].astype(str).str.zfill(8).str.upper()
     csv3["FormID_final"] = csv3["FormID_final"].astype(str).str.zfill(8).str.upper()
+    # Merge Speaker and new columns (ESP_Order, ParentDIAL, ParentDIAL_EDID) if available
+    merge_cols = ["FormID", "Speaker"]
+    for col in ["ESP_Order", "ParentDIAL", "ParentDIAL_EDID"]:
+        if col in csv1.columns:
+            merge_cols.append(col)
     csv4 = pd.merge(
         csv3,
-        csv1[["FormID", "Speaker"]],
+        csv1[merge_cols],
         left_on="FormID_final",
         right_on="FormID",
         how="left"
     ).rename(columns={"FormID": "FormID_y"})
 
-    csv4["FormID_final_sort"] = csv4["FormID_final"].fillna("")
     csv4["REC_id_sort"] = pd.to_numeric(csv4["REC_id"], errors="coerce").fillna(-1)
-    csv4 = csv4.sort_values(by=["FormID_final_sort", "REC_id_sort"], na_position="last").drop(columns=["FormID_final_sort", "REC_id_sort"])
+    if "ESP_Order" in csv4.columns:
+        # ESP structure order: preserves DIAL→INFO grouping
+        csv4["ESP_Order_sort"] = pd.to_numeric(csv4["ESP_Order"], errors="coerce").fillna(999999)
+        csv4 = csv4.sort_values(by=["ESP_Order_sort", "REC_id_sort"], na_position="last").drop(columns=["ESP_Order_sort", "REC_id_sort"])
+    else:
+        # Fallback: FormID order (old .pas without ESP_Order)
+        csv4["FormID_final_sort"] = csv4["FormID_final"].fillna("")
+        csv4 = csv4.sort_values(by=["FormID_final_sort", "REC_id_sort"], na_position="last").drop(columns=["FormID_final_sort", "REC_id_sort"])
+
+    # Drop intermediate merge columns, keep only useful ones
+    output_cols = ["List", "Partial", "EDID", "REC", "REC_id", "REC_idMax",
+                   "FormID_final", "Speaker", "Source", "Dest"]
+    # Add new columns if available (from updated .pas)
+    for col in ["ESP_Order", "ParentDIAL", "ParentDIAL_EDID"]:
+        if col in csv4.columns:
+            output_cols.append(col)
+    csv4 = csv4[[c for c in output_cols if c in csv4.columns]]
 
     plugin_base = csv_file.name.replace("02LW_", "").replace(".csv", "")
     output_filename = f"02LW_{plugin_base}.xlsx"
@@ -213,9 +228,12 @@ if st.button(t["convert_btn"], key="to_xlsx") and csv_file and xml_file:
         }
         mask = (~csv4["REC"].isin(excluded_rec)) & (csv4["Source"] == csv4["Dest"])
 
+        # Find the Dest column position dynamically (not hardcoded)
+        dest_col_idx = list(csv4.columns).index("Dest") + 1  # 1-indexed for openpyxl
+        dest_col_letter = get_column_letter(dest_col_idx)
         for i, match in enumerate(mask, start=2):
             if match:
-                ws[f"H{i}"].fill = fill
+                ws[f"{dest_col_letter}{i}"].fill = fill
         wb.save(tmp.name)
 
         with open(tmp.name, "rb") as f:
