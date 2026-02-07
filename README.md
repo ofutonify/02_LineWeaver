@@ -18,17 +18,19 @@
 
 ## 主な機能 / Features
 
-- SSEEdit から出力した情報用csv と xTranslatorのxml をマージ  
-- 翻訳しやすい `.xlsx` に変換、未翻訳セルには自動で色をつけて可視化  
-  （作業中は行列の内容を保持していれば、並べ替えや列の追加も可能です。出力時、EDIDが空欄の行、およびタイトルが空白の列は無視されます）  
-- 翻訳後の .xlsx を元に xml を再変換。xTranslator で再利用可能  
+- SSEEdit から出力した情報用csv と xTranslatorのxml をマージ
+- 翻訳しやすい `.xlsx` に変換、未翻訳セルには自動で色をつけて可視化
+  （作業中は行列の内容を保持していれば、並べ替えや列の追加も可能です。出力時、EDIDが空欄の行、およびタイトルが空白の列は無視されます）
+- ESP構造順（DIAL→INFO の親子関係）でソートされるため、会話の流れを把握しやすい
+- 翻訳後の .xlsx を元に xml を再変換。xTranslator で再利用可能
 - ダーク／ライトテーマに完全対応（Streamlitのテーマ切替に準拠）<br>
 <br>
 
 - Merge CSV output from SSEEdit and XML from xTranslator
-- Convert into a translator-friendly `.xlsx` file, with untranslated lines automatically highlighted.  
-  (You can sort rows or add columns as long as cell contents are preserved.  
+- Convert into a translator-friendly `.xlsx` file, with untranslated lines automatically highlighted.
+  (You can sort rows or add columns as long as cell contents are preserved.
   Rows with blank EDID or columns with blank headers will be ignored during XML conversion.)
+- Sorted by ESP structure order (DIAL→INFO parent-child relationship), making it easier to follow conversation flow
 - Reconvert the translated `.xlsx` back to XML for use in xTranslator
 - Dark/light theme support via Streamlit's auto-switching.
 
@@ -36,20 +38,20 @@
 
 ## ファイル / Included Files
 
-- `02_LineWeaver.py`：Streamlit アプリ本体  
-- `02LW_step1.pas`：SSEEdit用スクリプト（FormID + EDID ＋ 一部話者情報抽出）<br>
+- `02_LineWeaver.py`：Streamlit アプリ本体
+- `02LW_step1.pas`：SSEEdit用スクリプト（FormID, EDID, Speaker, ESP構造順, DIAL親子関係を抽出）<br>
 <br>
 
 - `02_LineWeaver.py`：The main Streamlit app for translation processing
-- `02LW_step1.pas`：SSEEdit script that extracts FormID, EDID, and speaker info
+- `02LW_step1.pas`：SSEEdit script that extracts FormID, EDID, Speaker, ESP structure order, and DIAL parent-child relationships
 
 ---
 
 ## 使い方と機能詳細 / Usage & Function Details
 
 ### 🔹 ステップ1：SSEEditでCSV出力
-1. SSEEditで `02LW_step1.pas` を「Apply Script」で実行 
-2. `02LW_〇〇.csv` を出力（FormID, EDID, REC, Plugin, Speaker付き）  
+1. SSEEditで `02LW_step1.pas` を「Apply Script」で実行
+2. `02LW_〇〇.csv` を出力（FormID, EDID, REC, Plugin, Speaker, ESP_Order, ParentDIAL, ParentDIAL_EDID 付き）
 ※ .pasの出力先はSSEEditフォルダ、exeと同じ階層
 
 ### 🔹 ステップ2：翻訳準備（CSV + XML → XLSX）  
@@ -58,16 +60,15 @@
 3. 「xlsx に変換開始」で翻訳用 `.xlsx` を生成（未翻訳セルに色付き）  
 
 ### 🔹 ステップ3：翻訳済みXLSXをXMLに再変換  
-1. 翻訳が完了した `.xlsx` をアップロード
-2. xTranslatorでの「翻訳先の言語」を選ぶ
-3. 「xml に変換開始」をクリックして、XML形式に変換  
-4. xTranslatorにインポートして `.esp` に適用 → 再度XMLエクスポート  
+1. 翻訳が完了した `.xlsx` をアップロード  
+2. 「xml に変換開始」をクリックして、XML形式に変換  
+3. xTranslatorにインポートして `.esp` に適用 → 再度XMLエクスポート  
 
 ---
 
-### 🔹 Step 1: Export CSV using SSEEdit  
+### 🔹 Step 1: Export CSV using SSEEdit
 1. Run `02LW_step1.pas` via "Apply Script" in SSEEdit
-2. Export `02LW_〇〇.csv` containing FormID, EDID, REC, Plugin, and Speaker info.
+2. Export `02LW_〇〇.csv` containing FormID, EDID, REC, Plugin, Speaker, ESP_Order, ParentDIAL, and ParentDIAL_EDID.
 ※ The output CSV from the .pas script will be saved in the same folder as the SSEEdit executable.
 
 ### 🔹 Step 2: Prepare for Translation (CSV + XML → XLSX)
@@ -76,20 +77,19 @@
 3. Click “Start conversion to xlsx” to generate a translation-ready `.xlsx` file with color-highlighted untranslated cells.
 
 ### 🔹 Step 3: Convert Translated XLSX back to XML
-1. Upload your completed `.xlsx` after translation
-2. Select the destination language (Dest) for XML export using the dropdown menu
-3. Click “Start conversion to XML” to re-generate the XML file  
-4. Import the XML back into xTranslator and apply it to the `.esp`. You can then re-export the updated XML if needed.
+1. Upload your completed `.xlsx` after translation  
+2. Click “Start conversion to XML” to re-generate the XML file  
+3. Import the XML back into xTranslator and apply it to the `.esp`. You can then re-export the updated XML if needed.
 
 ---
 
 ## 動作環境 / Requirements
 
-- Python 3.9 or higher
-- Required libraries: `streamlit`, `pandas`, `openpyxl`
+- Python 3.10 or higher
+- Required libraries: `streamlit`, `pandas`, `openpyxl`, `numpy`
 
 ```bash
-pip install streamlit pandas openpyxl
+pip install streamlit pandas openpyxl numpy
 ```
 
 - streamlit
@@ -113,9 +113,9 @@ Special thanks as well to the developers of xTranslator and SSEEdit!
 
 ## ライセンス / License
 MIT 
-- MITライセンスのもとで自由にご利用・改造・再配布OKですが、非営利の範囲でお願いします。
-- This tool is released under the MIT License. Feel free to use, modify, and redistribute it, but please keep it non-commercial.
+- このツールは個人の翻訳支援を目的としており、改造・再利用は自由ですが、商用利用はご遠慮ください。
+- This tool is intended for personal translation support. Feel free to modify or reuse it, but commercial use is not allowed.
 
 ## 制作・サポート / Credits & Support :)
 - 作者 / Author: ofu
-- 技術協力 / Technical collaboration: ChatGPT ＆ Mia ＆ Code GPT
+- 技術協力 / Technical collaboration: Claude
