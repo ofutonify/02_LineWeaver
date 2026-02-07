@@ -1,14 +1,20 @@
-﻿unit userscript;
+unit userscript;
 
 var
   sl: TStringList;
   firstPluginName: string;
+  currentDialFormID: string;
+  currentDialEDID: string;
+  espOrder: integer;
 
 function Initialize: integer;
 begin
   sl := TStringList.Create;
-  sl.Add('FormID,EDID,REC,Plugin,Speaker');
+  sl.Add('ESP_Order,FormID,EDID,REC,Plugin,Speaker,ParentDIAL,ParentDIAL_EDID');
   firstPluginName := '';
+  currentDialFormID := '';
+  currentDialEDID := '';
+  espOrder := 0;
 end;
 
 function GetSpeakerEditorID(e: IInterface): string;
@@ -50,18 +56,34 @@ end;
 function Process(e: IInterface): integer;
 var
   formID, edid, recType, pluginName, speaker: string;
+  parentDial, parentDialEDID: string;
 begin
   recType := Signature(e);
-  edid := GetEDIDSafe(e); // 空欄でも処理する
+  edid := GetEDIDSafe(e);
 
   formID := IntToHex(FixedFormID(e), 8);
   pluginName := GetFileName(GetFile(e));
   speaker := GetSpeakerEditorID(e);
 
+  espOrder := espOrder + 1;
+
+  parentDial := '';
+  parentDialEDID := '';
+
+  // DIALレコードを見たら覚えておく。次に来るINFOはこのDIALの子。
+  if recType = 'DIAL' then begin
+    currentDialFormID := formID;
+    currentDialEDID := edid;
+  end
+  else if recType = 'INFO' then begin
+    parentDial := currentDialFormID;
+    parentDialEDID := currentDialEDID;
+  end;
+
   if firstPluginName = '' then
     firstPluginName := ChangeFileExt(pluginName, '');
 
-  sl.Add(Format('%s,%s,%s,%s,%s', [formID, edid, recType, pluginName, speaker]));
+  sl.Add(Format('%d,%s,%s,%s,%s,%s,%s,%s', [espOrder, formID, edid, recType, pluginName, speaker, parentDial, parentDialEDID]));
 end;
 
 function Finalize: integer;
